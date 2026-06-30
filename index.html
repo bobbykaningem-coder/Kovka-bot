@@ -7,12 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #f2f2f7;
@@ -22,7 +17,6 @@
             margin: 0;
             overflow-x: hidden;
         }
-
         .hero {
             background: #1c1c1e;
             padding: 0;
@@ -32,7 +26,6 @@
             margin-bottom: 20px;
             cursor: pointer;
         }
-
         .hero-image {
             width: 100%;
             height: 220px;
@@ -41,11 +34,7 @@
             opacity: 0.85;
             transition: opacity 0.2s;
         }
-
-        .hero-image:active {
-            opacity: 0.6;
-        }
-
+        .hero-image:active { opacity: 0.6; }
         .hero-overlay {
             position: absolute;
             bottom: 0;
@@ -55,20 +44,8 @@
             background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
             pointer-events: none;
         }
-
-        .hero-overlay h1 {
-            font-size: 32px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-
-        .hero-overlay p {
-            font-size: 16px;
-            color: rgba(255,255,255,0.8);
-            margin-top: 4px;
-        }
-
+        .hero-overlay h1 { font-size: 32px; font-weight: 700; color: white; letter-spacing: -0.5px; }
+        .hero-overlay p { font-size: 16px; color: rgba(255,255,255,0.8); margin-top: 4px; }
         .hero .hint {
             position: absolute;
             bottom: 80px;
@@ -83,35 +60,18 @@
             white-space: nowrap;
             animation: pulseHint 2s infinite;
         }
-
         @keyframes pulseHint {
             0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
             50% { opacity: 1; transform: translateX(-50%) scale(1.02); }
         }
-
-        .container {
-            padding: 0 20px 40px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #8e8e93;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-            padding-left: 4px;
-        }
-
+        .container { padding: 0 20px 40px 20px; max-width: 600px; margin: 0 auto; }
+        .section-title { font-size: 13px; font-weight: 600; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-left: 4px; }
         .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 12px;
             margin-bottom: 30px;
         }
-
         .card {
             background: white;
             border-radius: 20px;
@@ -122,30 +82,57 @@
             cursor: pointer;
             border: 1px solid rgba(0,0,0,0.02);
         }
+        .card:active { transform: scale(0.96); background: #f8f8fc; }
+        .card svg { width: 36px; height: 36px; margin-bottom: 8px; color: #007aff; }
+        .card .label { font-size: 13px; font-weight: 500; color: #1c1c1e; }
+        .card .sub-label { font-size: 11px; color: #8e8e93; margin-top: 4px; }
 
-        .card:active {
-            transform: scale(0.96);
-            background: #f8f8fc;
+        /* Карточка контактов */
+        .contact-card {
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0,0,0,0.02);
         }
-
-        .card svg {
-            width: 36px;
-            height: 36px;
-            margin-bottom: 8px;
-            color: #007aff;
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f2f2f7;
         }
-
-        .card .label {
+        .contact-item:last-child { border-bottom: none; }
+        .contact-item .icon {
+            width: 44px;
+            height: 44px;
+            background: #007aff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .contact-item .info { flex: 1; }
+        .contact-item .info .title { font-size: 14px; font-weight: 500; color: #1c1c1e; }
+        .contact-item .info .value { font-size: 16px; color: #007aff; font-weight: 500; }
+        .contact-item .action {
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
-            color: #1c1c1e;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            display: inline-block;
         }
-
-        .card .sub-label {
-            font-size: 11px;
-            color: #8e8e93;
-            margin-top: 4px;
-        }
+        .contact-item .action:active { opacity: 0.7; }
 
         .form-card {
             background: white;
@@ -155,19 +142,8 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(0,0,0,0.02);
         }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #1c1c1e;
-            margin-bottom: 6px;
-        }
-
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; color: #1c1c1e; margin-bottom: 6px; }
         .form-group input {
             width: 100%;
             padding: 14px 16px;
@@ -179,13 +155,7 @@
             transition: border 0.2s;
             font-family: 'Inter', sans-serif;
         }
-
-        .form-group input:focus {
-            border-color: #007aff;
-            outline: none;
-            background: white;
-        }
-
+        .form-group input:focus { border-color: #007aff; outline: none; background: white; }
         .btn-primary {
             width: 100%;
             padding: 16px;
@@ -200,11 +170,7 @@
             font-family: 'Inter', sans-serif;
             box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
         }
-
-        .btn-primary:active {
-            transform: scale(0.97);
-            background: #005bbf;
-        }
+        .btn-primary:active { transform: scale(0.97); background: #005bbf; }
 
         .review-card {
             background: white;
@@ -214,32 +180,10 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
             border: 1px solid rgba(0,0,0,0.02);
         }
-
-        .review-card .name {
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .review-card .name .stars {
-            color: #ff9500;
-            font-size: 14px;
-        }
-
-        .review-card .text {
-            font-size: 14px;
-            color: #3a3a3c;
-            margin-top: 6px;
-            line-height: 1.4;
-        }
-
-        .review-card .date {
-            font-size: 12px;
-            color: #8e8e93;
-            margin-top: 6px;
-        }
+        .review-card .name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .review-card .name .stars { color: #ff9500; font-size: 14px; }
+        .review-card .text { font-size: 14px; color: #3a3a3c; margin-top: 6px; line-height: 1.4; }
+        .review-card .date { font-size: 12px; color: #8e8e93; margin-top: 6px; }
 
         .back-btn {
             background: none;
@@ -253,36 +197,13 @@
             align-items: center;
             gap: 4px;
         }
+        .page { display: none; animation: fadeUp 0.35s cubic-bezier(0.2, 0.9, 0.3, 1); }
+        .page.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .toast { background: #34c759; color: white; padding: 14px; border-radius: 16px; text-align: center; margin-top: 16px; font-weight: 500; animation: fadeUp 0.3s; }
+        .toast.error { background: #ff3b30; }
 
-        .page {
-            display: none;
-            animation: fadeUp 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .toast {
-            background: #34c759;
-            color: white;
-            padding: 14px;
-            border-radius: 16px;
-            text-align: center;
-            margin-top: 16px;
-            font-weight: 500;
-            animation: fadeUp 0.3s;
-        }
-
-        .toast.error {
-            background: #ff3b30;
-        }
-
+        /* Полноэкранная галерея */
         .fullscreen-gallery {
             position: fixed;
             top: 0;
@@ -296,113 +217,19 @@
             transition: opacity 0.35s ease;
             touch-action: none;
         }
+        .fullscreen-gallery.active { display: block; opacity: 1; }
+        .fullscreen-gallery .swiper-container { width: 100%; height: 100%; position: relative; overflow: hidden; touch-action: none; }
+        .fullscreen-gallery .swiper-track { display: flex; height: 100%; transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1); will-change: transform; }
+        .fullscreen-gallery .swiper-slide { flex: 0 0 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 20px; user-select: none; -webkit-user-select: none; }
+        .fullscreen-gallery .swiper-slide img { max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 8px; box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5); pointer-events: none; }
+        .fullscreen-gallery .dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+        .fullscreen-gallery .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transition: all 0.3s; }
+        .fullscreen-gallery .dots span.active { background: white; width: 24px; border-radius: 4px; }
+        .fullscreen-gallery .close-btn { position: absolute; top: 16px; right: 20px; z-index: 20; color: white; font-size: 28px; cursor: pointer; background: rgba(0,0,0,0.4); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; color: #fff; font-weight: 300; }
+        .fullscreen-gallery .close-btn:active { background: rgba(255,255,255,0.2); }
+        .fullscreen-gallery .counter { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 20; color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 500; }
 
-        .fullscreen-gallery.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .fullscreen-gallery .swiper-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        .fullscreen-gallery .swiper-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-            will-change: transform;
-        }
-
-        .fullscreen-gallery .swiper-slide {
-            flex: 0 0 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        .fullscreen-gallery .swiper-slide img {
-            max-width: 100%;
-            max-height: 85vh;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-            pointer-events: none;
-        }
-
-        .fullscreen-gallery .dots {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .fullscreen-gallery .dots span {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transition: all 0.3s;
-        }
-
-        .fullscreen-gallery .dots span.active {
-            background: white;
-            width: 24px;
-            border-radius: 4px;
-        }
-
-        .fullscreen-gallery .close-btn {
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            z-index: 20;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            background: rgba(0,0,0,0.4);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            color: #fff;
-            font-weight: 300;
-        }
-
-        .fullscreen-gallery .close-btn:active {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .fullscreen-gallery .counter {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            color: rgba(255,255,255,0.6);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-top: 8px;
-        }
-
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
         .gallery-item {
             border-radius: 20px;
             overflow: hidden;
@@ -412,82 +239,30 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
+        .gallery-item:active { transform: scale(0.97); }
+        .gallery-item img { width: 100%; height: 150px; object-fit: cover; display: block; background: #e5e5ea; }
+        .gallery-item .label { padding: 12px 12px 14px; font-size: 13px; font-weight: 500; text-align: center; color: #1c1c1e; background: white; }
 
-        .gallery-item:active {
-            transform: scale(0.97);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            display: block;
-            background: #e5e5ea;
-        }
-
-        .gallery-item .label {
-            padding: 12px 12px 14px;
-            font-size: 13px;
-            font-weight: 500;
-            text-align: center;
-            color: #1c1c1e;
-            background: white;
-        }
-
+        /* Тёмная тема */
         @media (prefers-color-scheme: dark) {
-            body {
-                background: #000;
-                color: #fff;
-            }
-            .card {
-                background: #1c1c1e;
-                border-color: #2c2c2e;
-            }
-            .card .label {
-                color: #fff;
-            }
-            .card:active {
-                background: #2c2c2e;
-            }
-            .form-card {
-                background: #1c1c1e;
-                border-color: #2c2c2e;
-            }
-            .form-group input {
-                background: #2c2c2e;
-                border-color: #3a3a3c;
-                color: #fff;
-            }
-            .form-group input:focus {
-                background: #1c1c1e;
-                border-color: #007aff;
-            }
-            .form-group label {
-                color: #fff;
-            }
-            .review-card {
-                background: #1c1c1e;
-                border-color: #2c2c2e;
-            }
-            .review-card .text {
-                color: #d1d1d6;
-            }
-            .review-card .name {
-                color: #fff;
-            }
-            .section-title {
-                color: #8e8e93;
-            }
-            .hero {
-                background: #0a0a0a;
-            }
-            .gallery-item {
-                background: #1c1c1e;
-            }
-            .gallery-item .label {
-                background: #1c1c1e;
-                color: #fff;
-            }
+            body { background: #000; color: #fff; }
+            .card { background: #1c1c1e; border-color: #2c2c2e; }
+            .card .label { color: #fff; }
+            .card:active { background: #2c2c2e; }
+            .form-card { background: #1c1c1e; border-color: #2c2c2e; }
+            .form-group input { background: #2c2c2e; border-color: #3a3a3c; color: #fff; }
+            .form-group input:focus { background: #1c1c1e; border-color: #007aff; }
+            .form-group label { color: #fff; }
+            .review-card { background: #1c1c1e; border-color: #2c2c2e; }
+            .review-card .text { color: #d1d1d6; }
+            .review-card .name { color: #fff; }
+            .section-title { color: #8e8e93; }
+            .hero { background: #0a0a0a; }
+            .gallery-item { background: #1c1c1e; }
+            .gallery-item .label { background: #1c1c1e; color: #fff; }
+            .contact-card { background: #1c1c1e; border-color: #2c2c2e; }
+            .contact-item { border-bottom-color: #2c2c2e; }
+            .contact-item .info .title { color: #fff; }
         }
     </style>
 </head>
@@ -504,6 +279,7 @@
 
     <div class="container">
 
+        <!-- ГЛАВНОЕ МЕНЮ -->
         <div id="page-menu" class="page active">
             <div class="section-title">Главное меню</div>
             <div class="card-grid">
@@ -524,12 +300,12 @@
                     <div class="label">Портфолио</div>
                     <div class="sub-label">Наши работы</div>
                 </div>
-                <div class="card" onclick="showPage('reviews')">
+                <div class="card" onclick="showPage('contacts')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                     </svg>
-                    <div class="label">Отзывы</div>
-                    <div class="sub-label">Что говорят</div>
+                    <div class="label">Контакты</div>
+                    <div class="sub-label">Связаться с нами</div>
                 </div>
             </div>
             <div style="text-align:center; color:#8e8e93; font-size:13px; margin-top:20px; padding-bottom:10px;">
@@ -537,6 +313,7 @@
             </div>
         </div>
 
+        <!-- ЗАЯВКА -->
         <div id="page-order" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
@@ -565,6 +342,7 @@
             </div>
         </div>
 
+        <!-- ПОРТФОЛИО -->
         <div id="page-portfolio" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
@@ -572,10 +350,36 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <div id="page-reviews" class="page">
+        <!-- КОНТАКТЫ + ОТЗЫВЫ -->
+        <div id="page-contacts" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
-            <h2 style="font-size:22px; font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;">⭐ Отзывы</h2>
+            
+            <h2 style="font-size:22px; font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;">📞 Контакты</h2>
+            
+            <div class="contact-card">
+                <!-- Телефон -->
+                <div class="contact-item">
+                    <div class="icon">📱</div>
+                    <div class="info">
+                        <div class="title">Телефон диспетчера</div>
+                        <div class="value">+998 94 022 2650</div>
+                    </div>
+                    <a href="tel:+998940222650" class="action">Позвонить</a>
+                </div>
+                
+                <!-- Telegram -->
+                <div class="contact-item">
+                    <div class="icon">✈️</div>
+                    <div class="info">
+                        <div class="title">Telegram</div>
+                        <div class="value">@Anasti_96</div>
+                    </div>
+                    <a href="https://t.me/Anasti_96" target="_blank" class="action">Написать</a>
+                </div>
+            </div>
+
+            <h2 style="font-size:22px; font-weight:700; margin:24px 0 16px; letter-spacing:-0.5px;">⭐ Отзывы</h2>
 
             <div class="review-card">
                 <div class="name">
@@ -604,6 +408,7 @@
 
     </div>
 
+    <!-- ПОЛНОЭКРАННАЯ ГАЛЕРЕЯ -->
     <div class="fullscreen-gallery" id="fullscreenGallery">
         <button class="close-btn" id="galleryCloseBtn">✕</button>
         <div class="counter" id="galleryCounter">1 / 4</div>
