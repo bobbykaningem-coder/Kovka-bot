@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ковка.uz</title>
+    <title>DvaBrata-Kovka </title>
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+          * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #f2f2f7;
@@ -83,11 +83,10 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
         .card:active { transform: scale(0.96); background: #f8f8fc; }
-        .card svg { width: 36px; height: 36px; margin-bottom: 8px; color: #007aff; }
+        .card svg { width: 36px; height: 36px; margin-bottom: 8px; color: #5b7fbf; }
         .card .label { font-size: 13px; font-weight: 500; color: #1c1c1e; }
         .card .sub-label { font-size: 11px; color: #8e8e93; margin-top: 4px; }
 
-        /* Карточка контактов */
         .contact-card {
             background: white;
             border-radius: 28px;
@@ -107,7 +106,7 @@
         .contact-item .icon {
             width: 44px;
             height: 44px;
-            background: #007aff;
+            background: #5b7fbf;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -118,9 +117,9 @@
         }
         .contact-item .info { flex: 1; }
         .contact-item .info .title { font-size: 14px; font-weight: 500; color: #1c1c1e; }
-        .contact-item .info .value { font-size: 16px; color: #007aff; font-weight: 500; }
+        .contact-item .info .value { font-size: 16px; color: #5b7fbf; font-weight: 500; }
         .contact-item .action {
-            background: #007aff;
+            background: #5b7fbf;
             color: white;
             border: none;
             padding: 8px 16px;
@@ -155,11 +154,11 @@
             transition: border 0.2s;
             font-family: 'Inter', sans-serif;
         }
-        .form-group input:focus { border-color: #007aff; outline: none; background: white; }
+        .form-group input:focus { border-color: #5b7fbf; outline: none; background: white; }
         .btn-primary {
             width: 100%;
             padding: 16px;
-            background: #007aff;
+            background: #4a7bb5;
             color: white;
             border: none;
             border-radius: 18px;
@@ -168,9 +167,9 @@
             cursor: pointer;
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(74, 123, 181, 0.3);
         }
-        .btn-primary:active { transform: scale(0.97); background: #005bbf; }
+        .btn-primary:active { transform: scale(0.97); background: #3a6595; }
 
         .review-card {
             background: white;
@@ -188,7 +187,7 @@
         .back-btn {
             background: none;
             border: none;
-            color: #007aff;
+            color: #6c7a8a;
             font-size: 15px;
             font-weight: 500;
             padding: 12px 0 8px 0;
@@ -203,7 +202,6 @@
         .toast { background: #34c759; color: white; padding: 14px; border-radius: 16px; text-align: center; margin-top: 16px; font-weight: 500; animation: fadeUp 0.3s; }
         .toast.error { background: #ff3b30; }
 
-        /* Полноэкранная галерея */
         .fullscreen-gallery {
             position: fixed;
             top: 0;
@@ -224,7 +222,7 @@
         .fullscreen-gallery .swiper-slide img { max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 8px; box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5); pointer-events: none; }
         .fullscreen-gallery .dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
         .fullscreen-gallery .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transition: all 0.3s; }
-        .fullscreen-gallery .dots span.active { background: white; width: 24px; border-radius: 4px; }
+        .fullscreen-gallery .dots span.active { background: #5b7fbf; width: 24px; border-radius: 4px; }
         .fullscreen-gallery .close-btn { position: absolute; top: 16px; right: 20px; z-index: 20; color: white; font-size: 28px; cursor: pointer; background: rgba(0,0,0,0.4); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; color: #fff; font-weight: 300; }
         .fullscreen-gallery .close-btn:active { background: rgba(255,255,255,0.2); }
         .fullscreen-gallery .counter { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 20; color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 500; }
@@ -243,7 +241,6 @@
         .gallery-item img { width: 100%; height: 150px; object-fit: cover; display: block; background: #e5e5ea; }
         .gallery-item .label { padding: 12px 12px 14px; font-size: 13px; font-weight: 500; text-align: center; color: #1c1c1e; background: white; }
 
-        /* Тёмная тема */
         @media (prefers-color-scheme: dark) {
             body { background: #000; color: #fff; }
             .card { background: #1c1c1e; border-color: #2c2c2e; }
@@ -251,7 +248,7 @@
             .card:active { background: #2c2c2e; }
             .form-card { background: #1c1c1e; border-color: #2c2c2e; }
             .form-group input { background: #2c2c2e; border-color: #3a3a3c; color: #fff; }
-            .form-group input:focus { background: #1c1c1e; border-color: #007aff; }
+            .form-group input:focus { background: #1c1c1e; border-color: #5b7fbf; }
             .form-group label { color: #fff; }
             .review-card { background: #1c1c1e; border-color: #2c2c2e; }
             .review-card .text { color: #d1d1d6; }
@@ -263,6 +260,7 @@
             .contact-card { background: #1c1c1e; border-color: #2c2c2e; }
             .contact-item { border-bottom-color: #2c2c2e; }
             .contact-item .info .title { color: #fff; }
+            .contact-item .info .value { color: #7b9fd4; }
         }
     </style>
 </head>
@@ -271,10 +269,10 @@
     <div class="hero" id="heroTrigger">
         <img class="hero-image" id="headerImage" src="https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg" alt="Сварочные работы">
         <div class="hero-overlay">
-            <h1>Ковка.uz</h1>
+            <h1>DvaBrata-Kovka</h1>
             <p>Профессиональные сварочные работы</p>
         </div>
-        <div class="hint">👆 Нажмите на фото, чтобы открыть галерею</div>
+        <div class="hint">👆открыть галерею</div>
     </div>
 
     <div class="container">
