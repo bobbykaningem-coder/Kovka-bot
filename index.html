@@ -30,7 +30,7 @@
             overflow: hidden;
             position: relative;
             margin-bottom: 20px;
-            touch-action: none;
+            cursor: pointer;
         }
 
         .hero-image {
@@ -39,6 +39,11 @@
             object-fit: cover;
             display: block;
             opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+
+        .hero-image:active {
+            opacity: 0.6;
         }
 
         .hero-overlay {
@@ -80,7 +85,7 @@
         }
 
         @keyframes pulseHint {
-            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
             50% { opacity: 1; transform: translateX(-50%) scale(1.02); }
         }
 
@@ -491,14 +496,14 @@
 </head>
 <body>
 
-    <!-- ХЕДЕР -->
-    <div class="hero" id="heroSwipe">
+    <!-- ХЕДЕР (открытие по клику) -->
+    <div class="hero" id="heroTrigger">
         <img class="hero-image" id="headerImage" src="https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg" alt="Сварочные работы">
         <div class="hero-overlay">
             <h1>Ковка.uz</h1>
             <p>Профессиональные сварочные работы</p>
         </div>
-        <div class="hint">👇 Свайпните вниз, чтобы открыть галерею</div>
+        <div class="hint">👆 Нажмите на фото, чтобы открыть галерею</div>
     </div>
 
     <div class="container">
@@ -639,7 +644,7 @@
         const dots = document.getElementById('galleryDots');
         const counter = document.getElementById('galleryCounter');
         const closeBtn = document.getElementById('galleryCloseBtn');
-        const hero = document.getElementById('heroSwipe');
+        const heroTrigger = document.getElementById('heroTrigger');
 
         function buildGallery() {
             track.innerHTML = '';
@@ -688,29 +693,12 @@
             document.body.style.overflow = '';
         }
 
-        // ОТКРЫТИЕ ПО СВАЙПУ ВНИЗ
-        let swipeStartY = 0;
-        let isSwiping = false;
+        // --- ОТКРЫТИЕ ПО КЛИКУ НА ХЕДЕР ---
+        heroTrigger.addEventListener('click', function() {
+            openGallery(0);
+        });
 
-        hero.addEventListener('touchstart', function(e) {
-            swipeStartY = e.touches[0].clientY;
-            isSwiping = true;
-        }, { passive: true });
-
-        hero.addEventListener('touchmove', function(e) {
-            if (!isSwiping) return;
-            const deltaY = e.touches[0].clientY - swipeStartY;
-            if (deltaY > 30) {
-                isSwiping = false;
-                openGallery(0);
-            }
-        }, { passive: true });
-
-        hero.addEventListener('touchend', function() {
-            isSwiping = false;
-        }, { passive: true });
-
-        // СВАЙП В ГАЛЕРЕЕ
+        // --- СВАЙП В ГАЛЕРЕЕ (влево/вправо) ---
         const container = document.getElementById('swiperContainer');
 
         container.addEventListener('touchstart', function(e) {
