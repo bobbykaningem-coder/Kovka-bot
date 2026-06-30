@@ -557,7 +557,7 @@
         <div class="dots" id="galleryDots"></div>
     </div>
 
-    <script>
+        <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
@@ -577,4 +577,142 @@
         const track = document.getElementById('swiperTrack');
         const dots = document.getElementById('galleryDots');
         const counter = document.getElementById('galleryCounter');
-        const closeBtn
+        const closeBtn = document.getElementById('galleryCloseBtn');
+
+        function buildGallery() {
+            track.innerHTML = '';
+            dots.innerHTML = '';
+            images.forEach((img, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                const image = document.createElement('img');
+                image.src = img.src;
+                image.alt = img.label;
+                slide.appendChild(image);
+                track.appendChild(slide);
+                const dot = document.createElement('span');
+                if (i === 0) dot.classList.add('active');
+                dots.appendChild(dot);
+            });
+            updateCounter();
+        }
+
+        function updateCounter() {
+            counter.textContent = `${currentIndex + 1} / ${images.length}`;
+            document.querySelectorAll('.dots span').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function goToSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= images.length) index = images.length - 1;
+            currentIndex = index;
+            const offset = -currentIndex * window.innerWidth;
+            track.style.transform = `translateX(${offset}px)`;
+            updateCounter();
+        }
+
+        function openGallery(index) {
+            currentIndex = index || 0;
+            goToSlide(currentIndex);
+            gallery.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGallery() {
+            gallery.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // --- ОТКРЫТИЕ ГАЛЕРЕИ ПО КЛИКУ НА ХЕДЕР ---
+        const heroTrigger = document.getElementById('heroTrigger');
+        if (heroTrigger) {
+            heroTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openGallery(0);
+            });
+        }
+
+        // --- СВАЙП В ГАЛЕРЕЕ ---
+        const container = document.getElementById('swiperContainer');
+
+        container.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            track.style.transition = 'none';
+        }, { passive: true });
+
+        container.addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            const deltaX = e.touches[0].clientX - startX;
+            const baseOffset = -currentIndex * window.innerWidth;
+            track.style.transform = `translateX(${baseOffset + deltaX}px)`;
+        }, { passive: true });
+
+        container.addEventListener('touchend', function(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            const deltaX = e.changedTouches[0].clientX - startX;
+            track.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1)';
+            if (Math.abs(deltaX) > 50) {
+                if (deltaX < 0 && currentIndex < images.length - 1) goToSlide(currentIndex + 1);
+                else if (deltaX > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
+                else goToSlide(currentIndex);
+            } else {
+                goToSlide(currentIndex);
+            }
+        }, { passive: true });
+
+        // --- ЗАКРЫТИЕ ---
+        closeBtn.addEventListener('click', closeGallery);
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeGallery(); });
+        container.addEventListener('click', function(e) { if (e.target.tagName === 'IMG') closeGallery(); });
+
+        // --- МИНИ-ГАЛЕРЕЯ ---
+        function renderMiniGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+            images.forEach((img, i) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="lazy"><div class="label">${img.label}</div>`;
+                item.addEventListener('click', function(e) { e.stopPropagation(); openGallery(i); });
+                grid.appendChild(item);
+            });
+        }
+
+        // --- НАВИГАЦИЯ ---
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- ФОРМА ---
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const source = document.getElementById('source').value.trim();
+            if (!name || !phone) {
+                document.getElementById('orderStatus').innerHTML = '<div class="toast error">⚠️ Заполните имя и телефон</div>';
+                return;
+            }
+            const orderData = { name, phone, location: location || 'Не указано', source: source || 'Не указано' };
+            tg.sendData(JSON.stringify(orderData));
+            document.getElementById('orderStatus').innerHTML = '<div class="toast">✅ Заявка отправлена!</div>';
+            document.getElementById('orderForm').reset();
+        });
+
+        // --- ЗАПУСК ---
+        buildGallery();
+        renderMiniGallery();
+
+        window.addEventListener('resize', function() {
+            if (gallery.classList.contains('active')) {
+                goToSlide(currentIndex);
+            }
+        });
+    </script>
