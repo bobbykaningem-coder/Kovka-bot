@@ -13,7 +13,6 @@
             --primary: #5B8DEF;
             --primary-light: #7AA5F5;
             --primary-dark: #4A78D9;
-            --primary-bg: #F0F5FF;
             --shadow: 0 4px 16px rgba(91, 141, 239, 0.2);
         }
 
@@ -25,7 +24,7 @@
             padding: 0;
             margin: 0;
             overflow-x: hidden;
-            padding-bottom: 80px; /* место для фиксированных контактов */
+            padding-bottom: 10px;
         }
 
         .hero {
@@ -83,7 +82,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
         }
         .card {
             background: white;
@@ -96,35 +95,33 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
         .card:active { transform: scale(0.96); background: #f8f8fc; }
-        .card svg { width: 36px; height: 36px; margin-bottom: 8px; color: #5B8DEF; }
+        .card svg { width: 36px; height: 36px; margin-bottom: 8px; color: #5B8DEF; stroke-width: 1.8; }
         .card .label { font-size: 13px; font-weight: 500; color: #1c1c1e; }
         .card .sub-label { font-size: 11px; color: #8e8e93; margin-top: 4px; }
 
-        /* --- ОПИСАНИЕ УСЛУГИ --- */
+        /* --- ОПИСАНИЕ УСЛУГИ (встроенное) --- */
         .service-description {
-            background: white;
-            border-radius: 20px;
-            padding: 20px 24px;
-            margin: 10px 0 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0,0,0,0.02);
+            padding: 20px 6px 12px 6px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 12px;
         }
         .service-description h3 {
             font-size: 16px;
             font-weight: 600;
             color: #1c1c1e;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
         }
         .service-description p {
             font-size: 14px;
             color: #5a5a5e;
             line-height: 1.5;
+            margin-bottom: 8px;
         }
         .service-description .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
         }
         .service-description .tags span {
             background: #f2f2f7;
@@ -132,6 +129,7 @@
             border-radius: 20px;
             font-size: 12px;
             color: #5a5a5e;
+            letter-spacing: 0.2px;
         }
 
         /* --- ФОРМА --- */
@@ -229,7 +227,7 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
         .review-card .name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-        .review-card .name .stars { color: #ff9500; font-size: 14px; }
+        .review-card .name .stars { color: #ff9500; font-size: 14px; letter-spacing: 2px; }
         .review-card .text { font-size: 14px; color: #3a3a3c; margin-top: 6px; line-height: 1.4; }
         .review-card .date { font-size: 12px; color: #8e8e93; margin-top: 6px; }
 
@@ -251,43 +249,50 @@
         .toast { background: #34c759; color: white; padding: 14px; border-radius: 16px; text-align: center; margin-top: 16px; font-weight: 500; animation: fadeUp 0.3s; }
         .toast.error { background: #ff3b30; }
 
-        /* --- ФИКСИРОВАННЫЕ КОНТАКТЫ РАЗРАБОТЧИКА В ЛЕВОМ НИЖНЕМ УГЛУ --- */
-        .dev-contacts {
-            position: fixed;
-            bottom: 16px;
-            left: 16px;
-            z-index: 999;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 12px 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            max-width: 200px;
+        /* --- КОНТАКТЫ РАЗРАБОТЧИКА (встроенные в фон) --- */
+        .dev-footer {
+            margin-top: 20px;
+            padding: 16px 6px 6px 6px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px 12px;
         }
-        .dev-contacts .dev-label {
-            font-size: 9px;
+        .dev-footer .dev-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: #8e8e93;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: rgba(255,255,255,0.4);
-            margin-bottom: 4px;
         }
-        .dev-contacts a {
-            display: block;
-            color: rgba(255,255,255,0.85);
+        .dev-footer .dev-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+        }
+        .dev-footer .dev-links a {
+            color: #5a5a5e;
             text-decoration: none;
-            font-size: 11px;
-            padding: 2px 0;
-            transition: color 0.2s;
+            font-size: 12px;
             font-weight: 400;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
-        .dev-contacts a:active { color: #5B8DEF; }
-        .dev-contacts .dev-phone {
-            font-size: 11px;
-            color: rgba(255,255,255,0.6);
-            margin-top: 2px;
+        .dev-footer .dev-links a:active { color: #5B8DEF; }
+        .dev-footer .dev-links svg {
+            width: 14px;
+            height: 14px;
+            stroke: #8e8e93;
+            stroke-width: 1.8;
+            fill: none;
         }
+        .dev-footer .dev-links a:active svg { stroke: #5B8DEF; }
 
+        /* --- ГАЛЕРЕЯ --- */
         .fullscreen-gallery {
             position: fixed;
             top: 0;
@@ -327,7 +332,7 @@
         .gallery-item img { width: 100%; height: 150px; object-fit: cover; display: block; background: #e5e5ea; }
         .gallery-item .label { padding: 12px 12px 14px; font-size: 13px; font-weight: 500; text-align: center; color: #1c1c1e; background: white; }
 
-        /* Тёмная тема */
+        /* --- ТЁМНАЯ ТЕМА --- */
         @media (prefers-color-scheme: dark) {
             body { background: #000; color: #fff; }
             .card { background: #1c1c1e; border-color: #2c2c2e; }
@@ -347,10 +352,14 @@
             .contact-card { background: #1c1c1e; border-color: #2c2c2e; }
             .contact-item { border-bottom-color: #2c2c2e; }
             .contact-item .info .title { color: #fff; }
-            .service-description { background: #1c1c1e; border-color: #2c2c2e; }
+            .service-description { border-bottom-color: rgba(255,255,255,0.05); }
             .service-description p { color: #a1a1a6; }
             .service-description .tags span { background: #2c2c2e; color: #a1a1a6; }
-            .dev-contacts { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.05); }
+            .dev-footer { border-top-color: rgba(255,255,255,0.05); }
+            .dev-footer .dev-links a { color: #8e8e93; }
+            .dev-footer .dev-links a:active { color: #5B8DEF; }
+            .dev-footer .dev-links svg { stroke: #5a5a5e; }
+            .dev-footer .dev-links a:active svg { stroke: #5B8DEF; }
         }
     </style>
 </head>
@@ -362,15 +371,16 @@
             <h1>DvaBrata_Kovka</h1>
             <p>Профессиональные сварочные работы</p>
         </div>
-        <div class="hint">👆 открыть галерею</div>
+        <div class="hint">Tap photo to open gallery</div>
     </div>
 
     <div class="container">
 
         <!-- ГЛАВНОЕ МЕНЮ -->
         <div id="page-menu" class="page active">
-            <div class="section-title">Главное меню</div>
+            <div class="section-title">Main Menu</div>
             <div class="card-grid">
+                <!-- Заявка -->
                 <div class="card" onclick="showPage('order')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20h9" />
@@ -379,6 +389,7 @@
                     <div class="label">Заявка</div>
                     <div class="sub-label">Оставить заявку</div>
                 </div>
+                <!-- Портфолио -->
                 <div class="card" onclick="showPage('portfolio')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -388,6 +399,7 @@
                     <div class="label">Портфолио</div>
                     <div class="sub-label">Наши работы</div>
                 </div>
+                <!-- Контакты -->
                 <div class="card" onclick="showPage('contacts')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -397,25 +409,52 @@
                 </div>
             </div>
 
-            <!-- ОПИСАНИЕ УСЛУГИ -->
+            <!-- ОПИСАНИЕ УСЛУГИ (встроенное) -->
             <div class="service-description">
-                <h3>🛠 Сварочные работы любой сложности</h3>
+                <h3>Сварочные работы любой сложности</h3>
                 <p>
-                    Профессиональная сварка металлоконструкций, кованых изделий, 
-                    алюминиевых и стальных конструкций. Работаем с частными и 
+                    Профессиональная сварка металлоконструкций, кованых изделий,
+                    алюминиевых и стальных конструкций. Работаем с частными и
                     коммерческими заказами.
                 </p>
                 <div class="tags">
-                    <span>🔩 Металлоконструкции</span>
-                    <span>⚡ Алюминиевая сварка</span>
-                    <span>🏗 Каркасы зданий</span>
-                    <span>🛠 Кованые перила</span>
-                    <span>🔧 Трубопроводы</span>
+                    <span>Металлоконструкции</span>
+                    <span>Алюминиевая сварка</span>
+                    <span>Каркасы зданий</span>
+                    <span>Кованые перила</span>
+                    <span>Трубопроводы</span>
                 </div>
             </div>
 
-            <div style="text-align:center; color:#8e8e93; font-size:13px; margin-top:6px; padding-bottom:10px;">
+            <div style="text-align:center; color:#8e8e93; font-size:12px; margin-top:4px; padding-bottom:4px;">
                 Нажмите на карточку, чтобы начать
+            </div>
+
+            <!-- КОНТАКТЫ РАЗРАБОТЧИКА (встроенные в фон) -->
+            <div class="dev-footer">
+                <span class="dev-label">Разработчик</span>
+                <div class="dev-links">
+                    <a href="mailto:bobbykaningem@gmail.com">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="M22 7l-10 6L2 7" />
+                        </svg>
+                        bobbykaningem
+                    </a>
+                    <a href="https://t.me/OneZnayushii" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 4.5L2.5 12l7.5 3.5L13.5 19l8-14.5z" />
+                            <path d="M10 15.5L12.5 19L21.5 4.5" />
+                        </svg>
+                        @OneZnayushii
+                    </a>
+                    <a href="tel:+998937941703">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                        +998 93 794 1703
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -424,7 +463,7 @@
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
             <div class="form-card">
-                <h2 style="font-size:22px; font-weight:700; margin-bottom:20px; letter-spacing:-0.5px;">📝 Заявка</h2>
+                <h2 style="font-size:22px; font-weight:700; margin-bottom:20px; letter-spacing:-0.5px;">Заявка</h2>
                 <form id="orderForm">
                     <div class="form-group">
                         <label>Ваше ФИО</label>
@@ -442,7 +481,7 @@
                         <label>Откуда узнали?</label>
                         <input type="text" id="source" placeholder="Instagram, знакомые, реклама...">
                     </div>
-                    <button type="submit" class="btn-primary">📨 Отправить заявку</button>
+                    <button type="submit" class="btn-primary">Отправить заявку</button>
                 </form>
                 <div id="orderStatus"></div>
             </div>
@@ -452,7 +491,7 @@
         <div id="page-portfolio" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
-            <h2 style="font-size:22px; font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;">🖼️ Наши работы</h2>
+            <h2 style="font-size:22px; font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;">Наши работы</h2>
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
@@ -460,10 +499,14 @@
         <div id="page-contacts" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
-            <h2 style="font-size:22px; font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;">📞 Контакты</h2>
+            <h2 style="font-size:22px; font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;">Контакты</h2>
             <div class="contact-card">
                 <div class="contact-item">
-                    <div class="icon">📱</div>
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </div>
                     <div class="info">
                         <div class="title">Телефон диспетчера</div>
                         <div class="value">+998 94 022 2650</div>
@@ -471,7 +514,12 @@
                     <a href="tel:+998940222650" class="action">Позвонить</a>
                 </div>
                 <div class="contact-item">
-                    <div class="icon">✈️</div>
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                            <path d="M21.5 4.5L2.5 12l7.5 3.5L13.5 19l8-14.5z" />
+                            <path d="M10 15.5L12.5 19L21.5 4.5" />
+                        </svg>
+                    </div>
                     <div class="info">
                         <div class="title">Telegram</div>
                         <div class="value">@Anasti_96</div>
@@ -480,7 +528,7 @@
                 </div>
             </div>
 
-            <h2 style="font-size:22px; font-weight:700; margin:24px 0 16px; letter-spacing:-0.5px;">⭐ Отзывы</h2>
+            <h2 style="font-size:22px; font-weight:700; margin:24px 0 16px; letter-spacing:-0.5px;">Отзывы</h2>
             <div class="review-card">
                 <div class="name">Алексей <span class="stars">★★★★★</span></div>
                 <div class="text">«Отлично сварили забор! Быстро и качественно. Рекомендую!»</div>
@@ -498,14 +546,6 @@
             </div>
         </div>
 
-    </div>
-
-    <!-- ФИКСИРОВАННЫЕ КОНТАКТЫ РАЗРАБОТЧИКА -->
-    <div class="dev-contacts">
-        <div class="dev-label">👨‍💻 Разработчик</div>
-        <a href="mailto:bobbykaningem@gmail.com">✉️ bobbykaningem@gmail.com</a>
-        <a href="https://t.me/OneZnayushii">✈️ @OneZnayushii</a>
-        <a href="tel:+998937941703" class="dev-phone">📱 +998 93 794 1703</a>
     </div>
 
     <!-- ГАЛЕРЕЯ -->
@@ -538,112 +578,4 @@
         const track = document.getElementById('swiperTrack');
         const dots = document.getElementById('galleryDots');
         const counter = document.getElementById('galleryCounter');
-        const closeBtn = document.getElementById('galleryCloseBtn');
-        const heroTrigger = document.getElementById('heroTrigger');
-
-        function buildGallery() {
-            track.innerHTML = '';
-            dots.innerHTML = '';
-            images.forEach((img, i) => {
-                const slide = document.createElement('div');
-                slide.className = 'swiper-slide';
-                const image = document.createElement('img');
-                image.src = img.src;
-                image.alt = img.label;
-                slide.appendChild(image);
-                track.appendChild(slide);
-                const dot = document.createElement('span');
-                if (i === 0) dot.classList.add('active');
-                dots.appendChild(dot);
-            });
-            updateCounter();
-        }
-
-        function updateCounter() {
-            counter.textContent = `${currentIndex + 1} / ${images.length}`;
-            document.querySelectorAll('.dots span').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentIndex);
-            });
-        }
-
-        function goToSlide(index) {
-            if (index < 0) index = 0;
-            if (index >= images.length) index = images.length - 1;
-            currentIndex = index;
-            const offset = -currentIndex * window.innerWidth;
-            track.style.transform = `translateX(${offset}px)`;
-            updateCounter();
-        }
-
-        function openGallery(index) {
-            currentIndex = index || 0;
-            goToSlide(currentIndex);
-            gallery.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeGallery() {
-            gallery.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        heroTrigger.addEventListener('click', function() { openGallery(0); });
-
-        const container = document.getElementById('swiperContainer');
-        container.addEventListener('touchstart', function(e) {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-            track.style.transition = 'none';
-        }, { passive: true });
-
-        container.addEventListener('touchmove', function(e) {
-            if (!isDragging) return;
-            const deltaX = e.touches[0].clientX - startX;
-            const baseOffset = -currentIndex * window.innerWidth;
-            track.style.transform = `translateX(${baseOffset + deltaX}px)`;
-        }, { passive: true });
-
-        container.addEventListener('touchend', function(e) {
-            if (!isDragging) return;
-            isDragging = false;
-            const deltaX = e.changedTouches[0].clientX - startX;
-            track.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1)';
-            if (Math.abs(deltaX) > 50) {
-                if (deltaX < 0 && currentIndex < images.length - 1) goToSlide(currentIndex + 1);
-                else if (deltaX > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
-                else goToSlide(currentIndex);
-            } else {
-                goToSlide(currentIndex);
-            }
-        }, { passive: true });
-
-        closeBtn.addEventListener('click', closeGallery);
-        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeGallery(); });
-        container.addEventListener('click', function(e) { if (e.target.tagName === 'IMG') closeGallery(); });
-
-        function renderMiniGallery() {
-            const grid = document.getElementById('galleryGrid');
-            grid.innerHTML = '';
-            images.forEach((img, i) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="lazy"><div class="label">${img.label}</div>`;
-                item.addEventListener('click', function(e) { e.stopPropagation(); openGallery(i); });
-                grid.appendChild(item);
-            });
-        }
-
-        function showPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + page).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const location = document.getElementById('location').value.trim();
-            const source = document.getElementById('source').value.trim();
-            if (!name || !phone) {
-                document.getElementById('orderStatus').innerHTML = '<div class="toast error">⚠
+        const closeBtn
