@@ -283,7 +283,6 @@
             background: #ff3b30;
         }
 
-        /* Полноэкранная галерея */
         .fullscreen-gallery {
             position: fixed;
             top: 0;
@@ -397,7 +396,6 @@
             font-weight: 500;
         }
 
-        /* Мини-галерея */
         .gallery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -436,7 +434,6 @@
             background: white;
         }
 
-        /* Тёмная тема */
         @media (prefers-color-scheme: dark) {
             body {
                 background: #000;
@@ -496,7 +493,6 @@
 </head>
 <body>
 
-    <!-- ХЕДЕР (открытие по клику) -->
     <div class="hero" id="heroTrigger">
         <img class="hero-image" id="headerImage" src="https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg" alt="Сварочные работы">
         <div class="hero-overlay">
@@ -508,7 +504,6 @@
 
     <div class="container">
 
-        <!-- МЕНЮ -->
         <div id="page-menu" class="page active">
             <div class="section-title">Главное меню</div>
             <div class="card-grid">
@@ -542,7 +537,6 @@
             </div>
         </div>
 
-        <!-- ЗАЯВКА -->
         <div id="page-order" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
@@ -571,7 +565,6 @@
             </div>
         </div>
 
-        <!-- ПОРТФОЛИО -->
         <div id="page-portfolio" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
@@ -579,7 +572,6 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <!-- ОТЗЫВЫ -->
         <div id="page-reviews" class="page">
             <button class="back-btn" onclick="showPage('menu')">← Назад</button>
             <div style="height:12px;"></div>
@@ -612,7 +604,6 @@
 
     </div>
 
-    <!-- ПОЛНОЭКРАННАЯ ГАЛЕРЕЯ -->
     <div class="fullscreen-gallery" id="fullscreenGallery">
         <button class="close-btn" id="galleryCloseBtn">✕</button>
         <div class="counter" id="galleryCounter">1 / 4</div>
@@ -627,7 +618,6 @@
         tg.ready();
         tg.expand();
 
-        // ФОТО
         const images = [
             { src: 'https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg', label: 'Сварочные работы' },
             { src: 'https://i.postimg.cc/50jfPzYJ/IMG-20260629-220618-181.jpg', label: 'Металлоконструкция' },
@@ -693,12 +683,10 @@
             document.body.style.overflow = '';
         }
 
-        // --- ОТКРЫТИЕ ПО КЛИКУ НА ХЕДЕР ---
         heroTrigger.addEventListener('click', function() {
             openGallery(0);
         });
 
-        // --- СВАЙП В ГАЛЕРЕЕ (влево/вправо) ---
         const container = document.getElementById('swiperContainer');
 
         container.addEventListener('touchstart', function(e) {
@@ -733,7 +721,6 @@
             }
         }, { passive: true });
 
-        // ЗАКРЫТИЕ
         closeBtn.addEventListener('click', closeGallery);
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeGallery();
@@ -745,7 +732,6 @@
             }
         });
 
-        // МИНИ-ГАЛЕРЕЯ
         function renderMiniGallery() {
             const grid = document.getElementById('galleryGrid');
             grid.innerHTML = '';
@@ -764,14 +750,12 @@
             });
         }
 
-        // НАВИГАЦИЯ
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page-' + page).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ФОРМА
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -795,7 +779,6 @@
             document.getElementById('orderForm').reset();
         });
 
-        // ЗАПУСК
         buildGallery();
         renderMiniGallery();
 
