@@ -791,264 +791,185 @@
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
+   const tg = window.Telegram.WebApp; // ИСПРАВЛЕНО: const с маленькой буквы
+tg.ready();
+tg.expand();
 
-        const images = [
-           [
-  {
-    "src": "https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg",
-    "label": "Сварочные работы"
-  },
-  {
-    "src": "https://i.postimg.cc/50jfPzYJ/IMG-20260629-220618-181.jpg",
-    "label": "Металлоконструкции"
-  },
-  {
-    "src": "https://i.postimg.cc/26Jrg5vt/IMG-20260629-220627-084.jpg",
-    "label": "Кованые перила"
-  },
-  {
-    "src": "https://i.postimg.cc/0Q3PhNm3/IMG-20260629-220710-061.jpg",
-    "label": "Каркас здания"
-  },
-  {
-    "src": "https://i.postimg.cc/Kv41YgBm/photo-2026-07-01-09-29-25.jpg",
-    "label": "Сварочные работы"
-  },
-  {
-    "src": "https://i.postimg.cc/tCt9pqmG/photo-2026-07-01-09-29-37.jpg",
-    "label": "Металлоконструкции"
-  },
-  {
-    "src": "https://i.postimg.cc/P5XTqgBN/photo-2026-07-01-09-29-41.jpg",
-    "label": "Кованые перила"
-  },
-  {
-    "src": "https://i.postimg.cc/TPhxVr2v/photo-2026-07-01-09-29-44.jpg",
-    "label": "Каркас здания"
-  },
-  {
-    "src": "https://i.postimg.cc/qR3dY4CD/photo-2026-07-01-09-29-53.jpg",
-    "label": "Ворота и заборы"
-  },
-  {
-    "src": "https://i.postimg.cc/J7jL5786/photo-2026-07-01-09-29-57.jpg",
-    "label": "Навесы и козырьки"
-  },
-  {
-    "src": "https://i.postimg.cc/Wbncx9hN/photo-2026-07-01-09-30-02.jpg",
-    "label": "Решётки на окна"
-  },
-  {
-    "src": "https://i.postimg.cc/FHHXvjLV/photo-2026-07-01-09-30-05.jpg",
-    "label": "Изделия из металла"
-  },
-  {
-    "src": "https://i.postimg.cc/gJRfssCP/photo-2026-07-01-09-30-09.jpg",
-    "label": "Проверенное качество"
-  },
-  {
-    "src": "https://i.postimg.cc/rsk7PWTf/photo-2026-07-01-09-30-16.jpg",
-    "label": "Надежный монтаж"
-  },
-  {
-    "src": "https://i.postimg.cc/ZnxXtRKt/photo-2026-07-01-09-30-19.jpg",
-    "label": "Сварка любой сложности"
-  },
-  {
-    "src": "https://i.postimg.cc/v8rJ6P7K/photo-2026-07-01-09-30-30.jpg",
-    "label": "Кованые элементы"
-  },
-  {
-    "src": "https://i.postimg.cc/tgnfRDCT/photo-2026-07-01-09-30-34.jpg",
-    "label": "Прочные навесы"
-  },
-  {
-    "src": "https://i.postimg.cc/fL4PVXJH/photo-2026-07-01-09-30-40.jpg",
-    "label": "Защитные решётки"
-  },
-  {
-    "src": "https://i.postimg.cc/rmSPxm4k/photo-2026-07-01-09-30-44.jpg",
-    "label": "Индивидуальный заказ"
-  },
-  {
-    "src": "https://i.postimg.cc/prR1ZHQQ/photo-2026-07-01-09-30-51.jpg",
-    "label": "Конструкции из стали"
-  },
-  {
-    "src": "https://i.postimg.cc/tJkvvM2b/photo-2026-07-01-09-31-03.jpg",
-    "label": "Работа под ключ"
-  },
-  {
-    "src": "https://i.postimg.cc/7PnRL5Dt/photo-2026-07-01-09-31-06.jpg",
-    "label": "Лестницы и перила"
-  },
-  {
-    "src": "https://i.postimg.cc/RVCDJvZ6/photo-2026-07-01-09-31-11.jpg",
-    "label": "Собственное производство"
-  },
-  {
-    "src": "https://i.postimg.cc/VkdZ44My/photo-2026-07-01-09-31-19.jpg",
-    "label": "Качественная ковка"
-  },
-  {
-    "src": "https://i.postimg.cc/NjSJnT7r/photo-2026-07-01-09-31-31.jpg",
-    "label": "Железная гарантия"
-  },
-  {
-    "src": "https://i.postimg.cc/ydzf1HbL/photo-2026-07-01-09-31-49.jpg",
-    "label": "Стиль и прочность"
-  }
-]
-        ];
+// Ссылка на ваш публичный JSON-файл с jsonbin.io
+const JSON_URL = 'https://api.jsonbin.io/v3/b/6a448044f5f4af5e294ae158?meta=false';
 
-        let currentIndex = 0;
-        let startX = 0;
-        let isDragging = false;
+// Массив картинок теперь изначально пустой, он заполнится сам
+let images = [];
+let currentIndex = 0;
+let startX = 0;
+let isDragging = false;
 
-        const gallery = document.getElementById('fullscreenGallery');
-        const track = document.getElementById('swiperTrack');
-        const dots = document.getElementById('galleryDots');
-        const counter = document.getElementById('galleryCounter');
-        const closeBtn = document.getElementById('galleryCloseBtn');
+const gallery = document.getElementById('fullscreenGallery');
+const track = document.getElementById('swiperTrack');
+const dots = document.getElementById('galleryDots');
+const counter = document.getElementById('galleryCounter');
+const closeBtn = document.getElementById('galleryCloseBtn');
 
-        function buildGallery() {
-            track.innerHTML = '';
-            dots.innerHTML = '';
-            images.forEach((img, i) => {
-                const slide = document.createElement('div');
-                slide.className = 'swiper-slide';
-                const image = document.createElement('img');
-                image.src = img.src;
-                image.alt = img.label;
-                slide.appendChild(image);
-                track.appendChild(slide);
-
-                const dot = document.createElement('span');
-                if (i === 0) dot.classList.add('active');
-                dots.appendChild(dot);
-            });
-            updateCounter();
-        }
-
-        function updateCounter() {
-            counter.textContent = `${currentIndex + 1} / ${images.length}`;
-            document.querySelectorAll('.dots span').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentIndex);
-            });
-        }
-
-        function goToSlide(index) {
-            if (index < 0) index = 0;
-            if (index >= images.length) index = images.length - 1;
-            currentIndex = index;
-            const offset = -currentIndex * window.innerWidth;
-            track.style.transform = `translateX(${offset}px)`;
-            updateCounter();
-        }
-
-        function openGallery(index) {
-            currentIndex = index || 0;
-            goToSlide(currentIndex);
-            gallery.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeGallery() {
-            gallery.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('heroTrigger').addEventListener('click', (e) => {
-            e.stopPropagation();
-            openGallery(0);
-        });
-
-        const container = document.getElementById('swiperContainer');
-        container.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-            track.style.transition = 'none';
-        }, { passive: true });
-
-        container.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.touches[0].clientX - startX;
-            const baseOffset = -currentIndex * window.innerWidth;
-            track.style.transform = `translateX(${baseOffset + deltaX}px)`;
-        }, { passive: true });
-
-        container.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const deltaX = e.changedTouches[0].clientX - startX;
-            track.style.transition = 'transform 0.3s ease';
-            if (Math.abs(deltaX) > 40) {
-                if (deltaX < 0 && currentIndex < images.length - 1) goToSlide(currentIndex + 1);
-                else if (deltaX > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
-                else goToSlide(currentIndex);
-            } else {
-                goToSlide(currentIndex);
-            }
-        }, { passive: true });
-
-        closeBtn.addEventListener('click', closeGallery);
-        container.addEventListener('click', (e) => { if (e.target.tagName === 'IMG') closeGallery(); });
-
-        function renderMiniGallery() {
-            const grid = document.getElementById('galleryGrid');
-            grid.innerHTML = '';
-            images.forEach((img, i) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="lazy" /><div class="label">${img.label}</div>`;
-                item.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openGallery(i);
-                });
-                grid.appendChild(item);
-            });
-        }
-
-        function showPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + page).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const location = document.getElementById('location').value.trim();
-            const source = document.getElementById('source').value.trim();
-
-            if (!name || !phone) {
-                document.getElementById('orderStatus').innerHTML = '<div class="toast error">Укажите имя и телефон</div>';
-                return;
-            }
-
-            const orderData = { name, phone, location: location || 'Не указано', source: source || 'Не указано' };
-            tg.sendData(JSON.stringify(orderData));
-
-            document.getElementById('orderStatus').innerHTML = '<div class="toast">Заявка отправлена! Возврат в чат...</div>';
-            document.getElementById('orderForm').reset();
-            
-            setTimeout(() => {
-                tg.close();
-            }, 1500);
-        });
-
+// Функция загрузки портфолио из сети
+async function loadPortfolioData() {
+    try {
+        const response = await fetch(JSON_URL);
+        if (!response.ok) throw new Error('Ошибка сети');
+        images = await response.json();
+        
+        // После успешной загрузки строим интерфейс
         buildGallery();
         renderMiniGallery();
+    } catch (error) {
+        console.error('Не удалось загрузить портфолио:', error);
+        // Запасной вариант (резервный), если интернет упал или ссылка не настроена
+        images = [
+            { src: 'https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg', label: 'Сварочные работы' },
+            { src: 'https://i.postimg.cc/50jfPzYJ/IMG-20260629-220618-181.jpg', label: 'Металлоконструкции' }
+        ];
+        buildGallery();
+        renderMiniGallery();
+    }
+}
 
-        window.addEventListener('resize', () => {
-            if (gallery.classList.contains('active')) {
-                goToSlide(currentIndex);
-            }
+function buildGallery() {
+    track.innerHTML = '';
+    dots.innerHTML = '';
+    if (!images.length) return;
+    
+    images.forEach((img, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        const image = document.createElement('img');
+        image.src = img.src;
+        image.alt = img.label;
+        slide.appendChild(image);
+        track.appendChild(slide);
+
+        const dot = document.createElement('span');
+        if (i === 0) dot.classList.add('active');
+        dots.appendChild(dot);
+    });
+    updateCounter();
+}
+
+function updateCounter() {
+    if (!images.length) return;
+    counter.textContent = `${currentIndex + 1} / ${images.length}`;
+    document.querySelectorAll('.dots span').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+    });
+}
+
+function goToSlide(index) {
+    if (index < 0) index = 0;
+    if (index >= images.length) index = images.length - 1;
+    currentIndex = index;
+    const offset = -currentIndex * window.innerWidth;
+    track.style.transform = `translateX(${offset}px)`;
+    updateCounter();
+}
+
+function openGallery(index) {
+    currentIndex = index || 0;
+    goToSlide(currentIndex);
+    gallery.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeGallery() {
+    gallery.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('heroTrigger').addEventListener('click', (e) => {
+    e.stopPropagation();
+    openGallery(0);
+});
+
+const container = document.getElementById('swiperContainer');
+container.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    track.style.transition = 'none';
+}, { passive: true });
+
+container.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.touches[0].clientX - startX;
+    const baseOffset = -currentIndex * window.innerWidth;
+    track.style.transform = `translateX(${baseOffset + deltaX}px)`;
+}, { passive: true });
+
+container.addEventListener('touchend', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const deltaX = e.changedTouches[0].clientX - startX;
+    track.style.transition = 'transform 0.3s ease';
+    if (Math.abs(deltaX) > 40) {
+        if (deltaX < 0 && currentIndex < images.length - 1) goToSlide(currentIndex + 1);
+        else if (deltaX > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
+        else goToSlide(currentIndex);
+    } else {
+        goToSlide(currentIndex);
+    }
+}, { passive: true });
+
+closeBtn.addEventListener('click', closeGallery);
+container.addEventListener('click', (e) => { if (e.target.tagName === 'IMG') closeGallery(); });
+
+function renderMiniGallery() {
+    const grid = document.getElementById('galleryGrid');
+    grid.innerHTML = '';
+    images.forEach((img, i) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="lazy" /><div class="label">${img.label}</div>`;
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openGallery(i);
         });
+        grid.appendChild(item);
+    });
+}
+
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const location = document.getElementById('location').value.trim();
+    const source = document.getElementById('source').value.trim();
+
+    if (!name || !phone) {
+        document.getElementById('orderStatus').innerHTML = '<div class="toast error">Укажите имя и телефон</div>';
+        return;
+    }
+
+    const orderData = { name, phone, location: location || 'Не указано', source: source || 'Не указано' };
+    tg.sendData(JSON.stringify(orderData));
+
+    document.getElementById('orderStatus').innerHTML = '<div class="toast">Заявка отправлена! Возврат в чат...</div>';
+    document.getElementById('orderForm').reset();
+    
+    setTimeout(() => {
+        tg.close();
+    }, 1500);
+});
+
+// Запускаем динамическую загрузку данных при старте
+loadPortfolioData();
+
+window.addEventListener('resize', () => {
+    if (gallery.classList.contains('active')) {
+        goToSlide(currentIndex);
+    }
+});
     </script>
 </body>
 </html>
