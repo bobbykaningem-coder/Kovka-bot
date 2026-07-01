@@ -43,7 +43,7 @@
             position: relative;
         }
 
-        /* ----- ДИНАМИЧЕСКИЙ ФОН СО СВАРКОЙ ----- */
+        /* ----- ДИНАМИЧЕСКИЙ ФОН СО СВАРКОЙ (ИСПРАВЛЕННЫЙ) ----- */
         body::before {
             content: '';
             position: fixed;
@@ -52,14 +52,15 @@
             background: var(--bg-start);
         }
 
-        /* Эффект электрической дуги (вспышки) */
+        /* Эффект электрической дуги (вспышки) — СОВМЕЩЕН С ИСКРАМИ */
         .welding-glow {
             position: fixed;
-            bottom: -50px;
-            left: 30%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(164, 219, 255, 0.25) 0%, rgba(255, 102, 0, 0.08) 40%, transparent 70%);
+            bottom: -250px; /* Смещаем центр градиента к точке сварки */
+            left: 35%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(164, 219, 255, 0.3) 0%, rgba(255, 102, 0, 0.08) 45%, transparent 70%);
             border-radius: 50%;
             filter: blur(40px);
             pointer-events: none;
@@ -68,15 +69,15 @@
         }
 
         @keyframes arc-flash {
-            0%, 15%, 30%, 32%, 60%, 63%, 100% { opacity: 0; transform: scale(0.8); }
-            16%, 28%, 61%, 62% { opacity: 1; transform: scale(1.1); }
+            0%, 15%, 30%, 32%, 60%, 63%, 100% { opacity: 0; }
+            16%, 28%, 61%, 62% { opacity: 1; }
             17% { opacity: 0.3; }
             19% { opacity: 0.9; }
             22% { opacity: 0.2; }
             25% { opacity: 1; }
         }
 
-        /* Контейнер для искр */
+        /* Контейнер для искр — ТОЧНО В ЦЕНТРЕ ДУГИ */
         .welding-sparks {
             position: fixed;
             bottom: 0;
@@ -100,15 +101,15 @@
             animation: spark-fly infinite linear;
         }
 
-        /* Кастомные траектории для каждой искры */
-        .spark:nth-child(1) { width: 3px; height: 3px; animation-duration: 2s; animation-delay: 0.5s; --x: -120px; --y: -400px; }
-        .spark:nth-child(2) { width: 2px; height: 2px; animation-duration: 1.5s; animation-delay: 1.2s; --x: 180px; --y: -500px; }
-        .spark:nth-child(3) { width: 4px; height: 4px; animation-duration: 2.2s; animation-delay: 0.9s; --x: -40px; --y: -600px; }
-        .spark:nth-child(4) { width: 3px; height: 3px; animation-duration: 1.8s; animation-delay: 2.3s; --x: 220px; --y: -350px; }
-        .spark:nth-child(5) { width: 2px; height: 4px; animation-duration: 1.2s; animation-delay: 1.7s; --x: -190px; --y: -450px; }
-        .spark:nth-child(6) { width: 3px; height: 3px; animation-duration: 2.5s; animation-delay: 3s; --x: 80px; --y: -550px; }
-        .spark:nth-child(7) { width: 2px; height: 2px; animation-duration: 1.6s; animation-delay: 3.4s; --x: -250px; --y: -300px; }
-        .spark:nth-child(8) { width: 4px; height: 5px; animation-duration: 2.1s; animation-delay: 4.1s; --x: 130px; --y: -650px; }
+        /* Траектории веером из одной точки (left: 35%) */
+        .spark:nth-child(1) { width: 3px; height: 3px; animation-duration: 2s; animation-delay: 0.5s; --x: -150px; --y: -400px; }
+        .spark:nth-child(2) { width: 2px; height: 2px; animation-duration: 1.5s; animation-delay: 1.2s; --x: 120px; --y: -500px; }
+        .spark:nth-child(3) { width: 4px; height: 4px; animation-duration: 2.2s; animation-delay: 0.9s; --x: -50px; --y: -600px; }
+        .spark:nth-child(4) { width: 3px; height: 3px; animation-duration: 1.8s; animation-delay: 2.3s; --x: 250px; --y: -350px; }
+        .spark:nth-child(5) { width: 2px; height: 4px; animation-duration: 1.2s; animation-delay: 1.7s; --x: -200px; --y: -450px; }
+        .spark:nth-child(6) { width: 3px; height: 3px; animation-duration: 2.5s; animation-delay: 3s; --x: 40px; --y: -550px; }
+        .spark:nth-child(7) { width: 2px; height: 2px; animation-duration: 1.6s; animation-delay: 3.4s; --x: -100px; --y: -350px; }
+        .spark:nth-child(8) { width: 4px; height: 5px; animation-duration: 2.1s; animation-delay: 4.1s; --x: 180px; --y: -600px; }
 
         @keyframes spark-fly {
             0% { transform: translate(0, 0) scale(1); opacity: 0; }
@@ -605,10 +606,8 @@
 </head>
 <body>
 
-    <!-- Сварочная дуга на фоне -->
     <div class="welding-glow"></div>
 
-    <!-- Разлетающиеся искры -->
     <div class="welding-sparks">
         <div class="spark"></div>
         <div class="spark"></div>
@@ -620,7 +619,6 @@
         <div class="spark"></div>
     </div>
 
-    <!-- HERO баннер -->
     <div class="hero" id="heroTrigger">
         <img class="hero-image" id="headerImage" src="https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg" alt="Сварочные работы" />
         <div class="hero-overlay">
@@ -632,7 +630,6 @@
 
     <div class="container">
 
-        <!-- СТРАНИЦА: МЕНЮ -->
         <div id="page-menu" class="page active">
             <div class="section-title">Навигация</div>
             <div class="card-grid">
@@ -665,7 +662,7 @@
                 <h3>Сварочные работы любой сложности</h3>
                 <p>
                     Сборка прочных металлоконструкций. Безопасные решётки на окна для защиты детей.<br />
-                    Навесы и козырьки (профнастил, лексан, пластик).<br />
+                    Навесы и козырьки (профнастил, лексан, plastic).<br />
                     Заборы и ограждения. Установка бельевых роликов и обрешётка кондиционеров.
                 </p>
                 <div class="tags">
@@ -676,7 +673,6 @@
                 </div>
             </div>
 
-            <!-- Подвал разработчика -->
             <div class="dev-footer">
                 <span class="dev-label">Разработчик</span>
                 <div class="dev-links">
@@ -702,7 +698,6 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: ЗАЯВКА -->
         <div id="page-order" class="page">
             <button class="back-btn" onclick="showPage('menu')">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>Назад
@@ -733,7 +728,6 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: ПОРТФОЛИО -->
         <div id="page-portfolio" class="page">
             <button class="back-btn" onclick="showPage('menu')">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>Назад
@@ -743,7 +737,6 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <!-- СТРАНИЦА: КОНТАКТЫ -->
         <div id="page-contacts" class="page">
             <button class="back-btn" onclick="showPage('menu')">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>Назад
@@ -788,7 +781,6 @@
 
     </div>
 
-    <!-- ПОЛНОЭКРАННАЯ ГАЛЕРЕЯ -->
     <div class="fullscreen-gallery" id="fullscreenGallery">
         <button class="close-btn" id="galleryCloseBtn">✕</button>
         <div class="counter" id="galleryCounter">1 / 4</div>
