@@ -43,7 +43,7 @@
             position: relative;
         }
 
-        /* ----- ДИНАМИЧЕСКИЙ ФОН СО СВАРКОЙ (ИСПРАВЛЕННЫЙ) ----- */
+        /* ----- ДИНАМИЧЕСКИЙ ФОН И СВЕТ ----- */
         body::before {
             content: '';
             position: fixed;
@@ -52,32 +52,55 @@
             background: var(--bg-start);
         }
 
-        /* Эффект электрической дуги (вспышки) — СОВМЕЩЕН С ИСКРАМИ */
+        /* Мягкий солнечный свет из окна по центру */
+        .ambient-sunlight {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 800px;
+            height: 600px;
+            /* Нежный янтарно-золотистый оттенок солнца */
+            background: radial-gradient(ellipse at center, rgba(229, 169, 60, 0.12) 0%, rgba(229, 169, 60, 0.03) 50%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Вспышка дуги: управляется через JS (класс active) */
         .welding-glow {
             position: fixed;
-            bottom: -250px; /* Смещаем центр градиента к точке сварки */
+            bottom: -250px;
             left: 35%;
             transform: translateX(-50%);
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(164, 219, 255, 0.3) 0%, rgba(255, 102, 0, 0.08) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(164, 219, 255, 0.45) 0%, rgba(255, 102, 0, 0.15) 45%, transparent 70%);
             border-radius: 50%;
             filter: blur(40px);
             pointer-events: none;
             z-index: -1;
-            animation: arc-flash 6s infinite ease-in-out;
+            opacity: 0;
+            transition: opacity 0.02s ease-out;
         }
 
-        @keyframes arc-flash {
-            0%, 15%, 30%, 32%, 60%, 63%, 100% { opacity: 0; }
-            16%, 28%, 61%, 62% { opacity: 1; }
-            17% { opacity: 0.3; }
-            19% { opacity: 0.9; }
-            22% { opacity: 0.2; }
-            25% { opacity: 1; }
+        /* Бешеная хаотичная пульсация яркости света, когда дуга активна */
+        .welding-glow.active {
+            opacity: 1;
+            animation: arc-shake 0.08s infinite alternate;
         }
 
-        /* Контейнер для искр — ТОЧНО В ЦЕНТРЕ ДУГИ */
+        @keyframes arc-shake {
+            0% { transform: translateX(-50%) scale(0.85); filter: blur(35px); opacity: 0.4; }
+            20% { opacity: 0.9; transform: translateX(-49%) scale(1.05); }
+            40% { opacity: 0.3; transform: translateX(-51%) scale(0.75); }
+            60% { opacity: 1; transform: translateX(-50%) scale(1.15); filter: blur(45px); }
+            80% { opacity: 0.5; transform: translateX(-52%) scale(0.9); }
+            100% { opacity: 0.95; transform: translateX(-49%) scale(1.1); }
+        }
+
+        /* Контейнер для искр */
         .welding-sparks {
             position: fixed;
             bottom: 0;
@@ -88,34 +111,32 @@
             z-index: -1;
         }
 
-        /* Реалистичные искры */
+        /* Искра */
         .spark {
             position: absolute;
             bottom: 0;
             left: 0;
             border-radius: 50%;
-            background: linear-gradient(to top, #fff, var(--primary-light), var(--accent-fire));
-            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--accent-fire);
+            background: linear-gradient(to top, #fff, var(--primary-light), var(--accent-fire), #731100);
+            box-shadow: 0 0 8px var(--primary-light), 0 0 15px var(--accent-fire);
             opacity: 0;
             transform-origin: bottom center;
-            animation: spark-fly infinite linear;
+            animation: spark-fly-unique 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
 
-        /* Траектории веером из одной точки (left: 35%) */
-        .spark:nth-child(1) { width: 3px; height: 3px; animation-duration: 2s; animation-delay: 0.5s; --x: -150px; --y: -400px; }
-        .spark:nth-child(2) { width: 2px; height: 2px; animation-duration: 1.5s; animation-delay: 1.2s; --x: 120px; --y: -500px; }
-        .spark:nth-child(3) { width: 4px; height: 4px; animation-duration: 2.2s; animation-delay: 0.9s; --x: -50px; --y: -600px; }
-        .spark:nth-child(4) { width: 3px; height: 3px; animation-duration: 1.8s; animation-delay: 2.3s; --x: 250px; --y: -350px; }
-        .spark:nth-child(5) { width: 2px; height: 4px; animation-duration: 1.2s; animation-delay: 1.7s; --x: -200px; --y: -450px; }
-        .spark:nth-child(6) { width: 3px; height: 3px; animation-duration: 2.5s; animation-delay: 3s; --x: 40px; --y: -550px; }
-        .spark:nth-child(7) { width: 2px; height: 2px; animation-duration: 1.6s; animation-delay: 3.4s; --x: -100px; --y: -350px; }
-        .spark:nth-child(8) { width: 4px; height: 5px; animation-duration: 2.1s; animation-delay: 4.1s; --x: 180px; --y: -600px; }
-
-        @keyframes spark-fly {
-            0% { transform: translate(0, 0) scale(1); opacity: 0; }
-            5% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        @keyframes spark-fly-unique {
+            0% { 
+                transform: translate(0, 0) scale(1); 
+                opacity: 1; 
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translate(var(--x), var(--y)) scale(0.15); 
+                opacity: 0; 
+                box-shadow: 0 0 0 transparent;
+            }
         }
 
         /* ----- HERO ----- */
@@ -606,18 +627,10 @@
 </head>
 <body>
 
-    <div class="welding-glow"></div>
-
-    <div class="welding-sparks">
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-    </div>
+    <!-- Источники света на фоне -->
+    <div class="ambient-sunlight"></div>
+    <div class="welding-glow" id="glow"></div>
+    <div class="welding-sparks" id="sparksContainer"></div>
 
     <div class="hero" id="heroTrigger">
         <img class="hero-image" id="headerImage" src="https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg" alt="Сварочные работы" />
@@ -791,185 +804,231 @@
     </div>
 
     <script>
-   const tg = window.Telegram.WebApp; // ИСПРАВЛЕНО: const с маленькой буквы
-tg.ready();
-tg.expand();
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
 
-// Ссылка на ваш публичный JSON-файл с jsonbin.io
-const JSON_URL = 'https://api.jsonbin.io/v3/b/6a448044f5f4af5e294ae158?meta=false';
+        const JSON_URL = 'https://api.jsonbin.io/v3/b/6a448044f5f4af5e294ae158?meta=false';
 
-// Массив картинок теперь изначально пустой, он заполнится сам
-let images = [];
-let currentIndex = 0;
-let startX = 0;
-let isDragging = false;
+        let images = [];
+        let currentIndex = 0;
+        let startX = 0;
+        let isDragging = false;
 
-const gallery = document.getElementById('fullscreenGallery');
-const track = document.getElementById('swiperTrack');
-const dots = document.getElementById('galleryDots');
-const counter = document.getElementById('galleryCounter');
-const closeBtn = document.getElementById('galleryCloseBtn');
+        const gallery = document.getElementById('fullscreenGallery');
+        const track = document.getElementById('swiperTrack');
+        const dots = document.getElementById('galleryDots');
+        const counter = document.getElementById('galleryCounter');
+        const closeBtn = document.getElementById('galleryCloseBtn');
 
-// Функция загрузки портфолио из сети
-async function loadPortfolioData() {
-    try {
-        const response = await fetch(JSON_URL);
-        if (!response.ok) throw new Error('Ошибка сети');
-        images = await response.json();
-        
-        // После успешной загрузки строим интерфейс
-        buildGallery();
-        renderMiniGallery();
-    } catch (error) {
-        console.error('Не удалось загрузить портфолио:', error);
-        // Запасной вариант (резервный), если интернет упал или ссылка не настроена
-        images = [
-            { src: 'https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg', label: 'Сварочные работы' },
-            { src: 'https://i.postimg.cc/50jfPzYJ/IMG-20260629-220618-181.jpg', label: 'Металлоконструкции' }
-        ];
-        buildGallery();
-        renderMiniGallery();
-    }
-}
+        async function loadPortfolioData() {
+            try {
+                const response = await fetch(JSON_URL);
+                if (!response.ok) throw new Error('Ошибка сети');
+                images = await response.json();
+                
+                buildGallery();
+                renderMiniGallery();
+            } catch (error) {
+                console.error('Не удалось загрузить портфолио:', error);
+                images = [
+                    { src: 'https://i.postimg.cc/VNKYBgNn/IMG-20260629-214848-612.jpg', label: 'Сварочные работы' },
+                    { src: 'https://i.postimg.cc/50jfPzYJ/IMG-20260629-220618-181.jpg', label: 'Металлоконструкции' }
+                ];
+                buildGallery();
+                renderMiniGallery();
+            }
+        }
 
-function buildGallery() {
-    track.innerHTML = '';
-    dots.innerHTML = '';
-    if (!images.length) return;
-    
-    images.forEach((img, i) => {
-        const slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        const image = document.createElement('img');
-        image.src = img.src;
-        image.alt = img.label;
-        slide.appendChild(image);
-        track.appendChild(slide);
+        function buildGallery() {
+            track.innerHTML = '';
+            dots.innerHTML = '';
+            if (!images.length) return;
+            
+            images.forEach((img, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                const image = document.createElement('img');
+                image.src = img.src;
+                image.alt = img.label;
+                slide.appendChild(image);
+                track.appendChild(slide);
 
-        const dot = document.createElement('span');
-        if (i === 0) dot.classList.add('active');
-        dots.appendChild(dot);
-    });
-    updateCounter();
-}
+                const dot = document.createElement('span');
+                if (i === 0) dot.classList.add('active');
+                dots.appendChild(dot);
+            });
+            updateCounter();
+        }
 
-function updateCounter() {
-    if (!images.length) return;
-    counter.textContent = `${currentIndex + 1} / ${images.length}`;
-    document.querySelectorAll('.dots span').forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentIndex);
-    });
-}
+        function updateCounter() {
+            if (!images.length) return;
+            counter.textContent = `${currentIndex + 1} / ${images.length}`;
+            document.querySelectorAll('.dots span').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
 
-function goToSlide(index) {
-    if (index < 0) index = 0;
-    if (index >= images.length) index = images.length - 1;
-    currentIndex = index;
-    const offset = -currentIndex * window.innerWidth;
-    track.style.transform = `translateX(${offset}px)`;
-    updateCounter();
-}
+        function goToSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= images.length) index = images.length - 1;
+            currentIndex = index;
+            const offset = -currentIndex * window.innerWidth;
+            track.style.transform = `translateX(${offset}px)`;
+            updateCounter();
+        }
 
-function openGallery(index) {
-    currentIndex = index || 0;
-    goToSlide(currentIndex);
-    gallery.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+        function openGallery(index) {
+            currentIndex = index || 0;
+            goToSlide(currentIndex);
+            gallery.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-function closeGallery() {
-    gallery.classList.remove('active');
-    document.body.style.overflow = '';
-}
+        function closeGallery() {
+            gallery.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-document.getElementById('heroTrigger').addEventListener('click', (e) => {
-    e.stopPropagation();
-    openGallery(0);
-});
-
-const container = document.getElementById('swiperContainer');
-container.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    track.style.transition = 'none';
-}, { passive: true });
-
-container.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const deltaX = e.touches[0].clientX - startX;
-    const baseOffset = -currentIndex * window.innerWidth;
-    track.style.transform = `translateX(${baseOffset + deltaX}px)`;
-}, { passive: true });
-
-container.addEventListener('touchend', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    const deltaX = e.changedTouches[0].clientX - startX;
-    track.style.transition = 'transform 0.3s ease';
-    if (Math.abs(deltaX) > 40) {
-        if (deltaX < 0 && currentIndex < images.length - 1) goToSlide(currentIndex + 1);
-        else if (deltaX > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
-        else goToSlide(currentIndex);
-    } else {
-        goToSlide(currentIndex);
-    }
-}, { passive: true });
-
-closeBtn.addEventListener('click', closeGallery);
-container.addEventListener('click', (e) => { if (e.target.tagName === 'IMG') closeGallery(); });
-
-function renderMiniGallery() {
-    const grid = document.getElementById('galleryGrid');
-    grid.innerHTML = '';
-    images.forEach((img, i) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="lazy" /><div class="label">${img.label}</div>`;
-        item.addEventListener('click', (e) => {
+        document.getElementById('heroTrigger').addEventListener('click', (e) => {
             e.stopPropagation();
-            openGallery(i);
+            openGallery(0);
         });
-        grid.appendChild(item);
-    });
-}
 
-function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+        const container = document.getElementById('swiperContainer');
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            track.style.transition = 'none';
+        }, { passive: true });
 
-document.getElementById('orderForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const location = document.getElementById('location').value.trim();
-    const source = document.getElementById('source').value.trim();
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.touches[0].clientX - startX;
+            const baseOffset = -currentIndex * window.innerWidth;
+            track.style.transform = `translateX(${baseOffset + deltaX}px)`;
+        }, { passive: true });
 
-    if (!name || !phone) {
-        document.getElementById('orderStatus').innerHTML = '<div class="toast error">Укажите имя и телефон</div>';
-        return;
-    }
+        container.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            const deltaX = e.changedTouches[0].clientX - startX;
+            track.style.transition = 'transform 0.3s ease';
+            if (Math.abs(deltaX) > 40) {
+                if (deltaX < 0 && currentIndex < images.length - 1) goToSlide(currentIndex + 1);
+                else if (deltaX > 0 && currentIndex > 0) goToSlide(currentIndex - 1);
+                else goToSlide(currentIndex);
+            } else {
+                goToSlide(currentIndex);
+            }
+        }, { passive: true });
 
-    const orderData = { name, phone, location: location || 'Не указано', source: source || 'Не указано' };
-    tg.sendData(JSON.stringify(orderData));
+        closeBtn.addEventListener('click', closeGallery);
+        container.addEventListener('click', (e) => { if (e.target.tagName === 'IMG') closeGallery(); });
 
-    document.getElementById('orderStatus').innerHTML = '<div class="toast">Заявка отправлена! Возврат в чат...</div>';
-    document.getElementById('orderForm').reset();
-    
-    setTimeout(() => {
-        tg.close();
-    }, 1500);
-});
+        function renderMiniGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+            images.forEach((img, i) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `<img src="${img.src}" alt="${img.label}" loading="lazy" /><div class="label">${img.label}</div>`;
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openGallery(i);
+                });
+                grid.appendChild(item);
+            });
+        }
 
-// Запускаем динамическую загрузку данных при старте
-loadPortfolioData();
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-window.addEventListener('resize', () => {
-    if (gallery.classList.contains('active')) {
-        goToSlide(currentIndex);
-    }
-});
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const source = document.getElementById('source').value.trim();
+
+            if (!name || !phone) {
+                document.getElementById('orderStatus').innerHTML = '<div class="toast error">Укажите имя и телефон</div>';
+                return;
+            }
+
+            const orderData = { name, phone, location: location || 'Не указано', source: source || 'Не указано' };
+            tg.sendData(JSON.stringify(orderData));
+
+            document.getElementById('orderStatus').innerHTML = '<div class="toast">Заявка отправлена! Возврат в чат...</div>';
+            document.getElementById('orderForm').reset();
+            
+            setTimeout(() => {
+                tg.close();
+            }, 1500);
+        });
+
+        loadPortfolioData();
+
+        window.addEventListener('resize', () => {
+            if (gallery.classList.contains('active')) {
+                goToSlide(currentIndex);
+            }
+        });
+
+        // ----- СИМУЛЯЦИЯ РЕАЛИСТИЧНОЙ СВАРКИ -----
+        const glowEl = document.getElementById('glow');
+        const sparksContainer = document.getElementById('sparksContainer');
+
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+
+            const size = Math.random() * 3 + 1.5; 
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size * (Math.random() * 1.5 + 1)}px`;
+
+            const angle = (Math.random() * 120 - 60) * (Math.PI / 180);
+            const distance = Math.random() * 350 + 150; 
+            
+            const x = Math.sin(angle) * distance;
+            const y = -Math.cos(angle) * distance;
+
+            spark.style.setProperty('--x', `${x}px`);
+            spark.style.setProperty('--y', `${y}px`);
+            
+            spark.style.animationDuration = `${Math.random() * 0.6 + 0.6}s`;
+
+            sparksContainer.appendChild(spark);
+
+            setTimeout(() => spark.remove(), 1200);
+        }
+
+        function runWeldingCycle() {
+            const isLongFlash = Math.random() > 0.4;
+            const flashDuration = isLongFlash ? (Math.random() * 1200 + 600) : (Math.random() * 150 + 50);
+
+            glowEl.classList.add('active');
+
+            const sparkInterval = setInterval(() => {
+                const sparksCount = Math.floor(Math.random() * 3) + 2;
+                for (let i = 0; i < sparksCount; i++) {
+                    createSpark();
+                }
+            }, 40);
+
+            setTimeout(() => {
+                glowEl.classList.remove('active');
+                clearInterval(sparkInterval);
+
+                const nextPause = Math.random() * 3000 + 1000;
+                setTimeout(runWeldingCycle, nextPause);
+            }, flashDuration);
+        }
+
+        setTimeout(runWeldingCycle, 1000);
     </script>
 </body>
 </html>
